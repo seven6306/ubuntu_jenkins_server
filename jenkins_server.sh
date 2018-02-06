@@ -50,8 +50,8 @@ if [ $? -eq 0 ]; then
         service nginx restart
         service jenkins restart
         case $? in
-            0) printf "\n${LINE}\n%s\t%31s\033[0;32m %s \033[0m]\n\n" " * Configure jenkins server with SSL" "[" "OK" && PORT=443 && PROTOCOL=https;;
-            *) printf "\n${LINE}\n%s\t%31s\033[0;31m %s \033[0m]\n\n" " * Configure jenkins server with SSL" "[" "Fail" && exit 1;;
+            0) printf "%s\t%34s\033[0;32m %s \033[0m]\n\n" " * Configure jenkins server with SSL" "[" "OK" && PORT=443 && PROTOCOL=https;;
+            *) printf "%s\t%34s\033[0;31m %s \033[0m]\n\n" " * Configure jenkins server with SSL" "[" "Fail" && exit 1;;
         esac
     else
         printf "\n${LINE}\n${RED}ERROR: Sorry, you must install nginx before configure SSL.${NC}\n\n"
