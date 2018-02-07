@@ -21,4 +21,4 @@ sed -i "s,`grep -E "server_name \w+*" /etc/nginx/sites-enabled/default | grep -v
 sed -i "s,`grep 'proxy_redirect      http://localhost:8080' /etc/nginx/sites-enabled/default`,\ \ \ \ \ \ \ \ proxy_redirect\ \ \ \ \ \ http\:\/\/localhost\:8080 https:\/\/${server_name};,g" /etc/nginx/sites-enabled/default
 service nginx restart
 service jenkins restart
-printf "* Jenkins site - ${GREEN}https://${server_name}${NC}${RED}:443${NC}\n"
+printf " * Jenkins site - ${GREEN}https://${server_name}${NC}${RED}:443${NC}\n"
