@@ -19,6 +19,7 @@ if [ `echo $server_name | grep -coE "^([0-9]{1,3}\.){3}[0-9]{1,3}$"` -eq 0 ]; th
 fi
 sed -i "s,`grep -E "server_name \w+*" /etc/nginx/sites-enabled/default | grep -vE "^#\s+.*server_name"`,\ \ \ \ \ \ \ \ server_name\ ${server_name};,g" /etc/nginx/sites-enabled/default
 sed -i "s,`grep 'proxy_redirect      http://localhost:8080' /etc/nginx/sites-enabled/default`,\ \ \ \ \ \ \ \ proxy_redirect\ \ \ \ \ \ http\:\/\/localhost\:8080 https:\/\/${server_name};,g" /etc/nginx/sites-enabled/default
+printf "\n"
 service nginx restart
 service jenkins restart
-printf " * Jenkins site - ${GREEN}https://${server_name}${NC}${RED}:443${NC}\n"
+printf " * Jenkins site - ${GREEN}https://${server_name}${NC}${RED}:443${NC}\n\n"
