@@ -16,6 +16,6 @@ CheckInstall()
         --install) [ $int_x -ne 0 ] && printf "\033[0;31mERROR: $pkgName is already installed.\033[0m\n" && exit 1;;
         --remove)  [ $int_x -eq 0 ] && printf "\033[0;31mERROR: $pkgName is not installed.\033[0m\n" && exit 1;;
     esac
-    printf "%s\t%31s\033[0;32m %s \033[0m]\n" " * Check if $pkgName is installed      " "[" "OK"
+    printf "%s\t%34s\033[0;32m %s \033[0m]\n" " * Check if $pkgName is installed      " "[" "OK"
     return 0
 }
