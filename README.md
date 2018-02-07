@@ -5,7 +5,7 @@
 </ol>
 <ol><b>Update Server IP address or domain name</b>
   <ol>Usage:
-  <li>      -h, --help    Show script usage</li>
-  <li>      -q, --quiet   Force to update jenkins server IP address</li>
+  <ol>      -h, --help    Show script usage</ol>
+  <ol>      -q, --quiet   Force to update jenkins server IP address</ol>
   </ol>
 </ol>
