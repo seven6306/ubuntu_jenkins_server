@@ -51,7 +51,7 @@ if [ $? -eq 0 ]; then
         service jenkins restart
         case $? in
             0) printf "%s\t%34s\033[0;32m %s \033[0m]\n\n" " * Configure jenkins server with SSL" "[" "OK" && PORT=443 && PROTOCOL=https;;
-            *) printf "%s\t%34s\033[0;31m %s \033[0m]\n\n" " * Configure jenkins server with SSL" "[" "Fail" && exit 1;;
+            *) printf "%s\t%34s\033[0;31m%s\033[0m]\n\n" " * Configure jenkins server with SSL" "[" "Fail" && exit 1;;
         esac
     else
         printf "\n${LINE}\n${RED}ERROR: Sorry, you must install nginx before configure SSL.${NC}\n\n"
@@ -59,5 +59,5 @@ if [ $? -eq 0 ]; then
 fi
 printf "${LINE}\n\n${PURPLE}Packages Install Info:${NC}\n * Oracle Java Version:  \t[ ${GREEN}${JavaVer}${NC} ]\n"
 printf " * Jenkins Server Status:\t[ ${GREEN}Running${NC} ]\n"
-[ -z $initPasswd ] && printf " * Get Initial Admin Password:\t[ ${RED}Fail${NC} ]\n\n" && initPasswd=None || printf " * Get Initial Admin Password:\t[ ${GREEN}OK${NC} ]\n\n"
+[ -z $initPasswd ] && printf " * Get Initial Admin Password:\t[${RED}Fail${NC}]\n\n" && initPasswd=None || printf " * Get Initial Admin Password:\t[ ${GREEN}OK${NC} ]\n\n"
 printf "${LINE}\n\n${PURPLE}Jenkins Server Info:${NC}\n * Server site - ${GREEN}${PROTOCOL}://`GethostIPAddr`${NC}${RED}:${PORT}${NC}\n * Init Password - ${RED}${initPasswd}${NC}\n\n"
