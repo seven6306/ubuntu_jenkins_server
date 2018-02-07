@@ -11,7 +11,7 @@ case $1 in
     -q|--quiet) server_name=`GethostIPAddr`;;
     *) printf "To update jenkins server name (Default: localhost),\n" && read -p "please input IP or domain name: " server_name;;
 esac
-[ -z $server_name ] && printf "${PURPLE}Loading default value: localhost${NC}\n\n" && server_name=`GethostIPAddr`
+[ -z $server_name ] && printf "\n${PURPLE}Loading default value: localhost ...${NC}\n\n" && server_name=`GethostIPAddr`
 if [ `echo $server_name | grep -coE "^([0-9]{1,3}\.){3}[0-9]{1,3}$"` -eq 0 ]; then
     if [ `echo $server_name | grep -cE "^([a-zA-Z_]+\.){1,2}[a-zA-Z_]+"` -eq 0 ]; then
         printf "${RED}ERROR: Invalid domain or IP address format.${NC}\n" && exit 1
