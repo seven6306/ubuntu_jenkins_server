@@ -39,12 +39,14 @@ do  for i in '.' '..' '...' '....'
 done
 JavaVer=`java -version 2>&1 | grep "java version" | awk -F\" '{print $2}'`
 [ `service jenkins status | grep -co not` -ne 0 ] && printf "\n${RED}Sorry, jenkins server is unavailable...${NC}\n\n" && exit 1
-Notification "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n"
 
-[ ! -f suggested_plugin_list.json ] && printf "${RED}ERROR: file suggested_plugin_list.json is missing.${NC}" && exit 1
-for plugin in "`grep -E "\"suggested\": true" suggested_plugin_list.json | awk -F\" '{print $4}'`"
+[ ! -f suggested_plugin_list.json ] && printf "${RED}ERROR: file suggested_plugin_list.json is missing.${NC}\n" && exit 1
+printf "\n${LINE}\n${PURPLE}Starting install Jenkins suggested plugins:${NC}\n${LINE}\n"
+for plugin in `grep -E "\"suggested\": true" suggested_plugin_list.json | awk -F\" '{print $4}'`
 do  java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://`GethostIPAddr`:8080/ install-plugin $plugin
 done
+printf "\n${LINE}\n\n"
+Notification "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n"
 if [ $? -eq 0 ]; then
     if [ `dpkg -l | grep -c nginx` -gt 1 -a -f /etc/nginx/sites-enabled/default ]; then
         sed -i 's,try_files $uri $uri/ =404;,# try_files $uri $uri/ =404;,g' /etc/nginx/sites-enabled/default
