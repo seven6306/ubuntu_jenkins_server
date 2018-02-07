@@ -1,13 +1,14 @@
 # Ubuntu_Jenkins_Server
 
 ## Description
-<ol>one click to install jenkins server</ol>
-</ol>
+* *One click to install Jenkins server*
+* *Support SSL protocol to server*
 
-## Update Server IP address or domain name
+## How to update server IP or domain
 
 ```javascript
 Usage:
+      sh update_server_IP.sh [OPTION]
       -h, --help    Show script usage
       -q, --quiet   Force to update jenkins server IP address
 ```
