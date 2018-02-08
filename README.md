@@ -14,6 +14,9 @@ Usage:
       installed.
 
       sh jenkins_server.sh [OPTION] [ARGV1]
+      -y, --yes     No required question but user create
+                    username=[adminUser] password=[adminPassword]
+      e.g., sh jenkins_server.sh -y username=test password=123456
       -h, --help    Show script usage
       -u, --update  Manual update jenkins server IP address
                     --quiet      Force to update
@@ -24,4 +27,4 @@ Usage:
                     --full       Full install
       e.g., sh jenkins_server.sh -p --suggested
 ```
-pass=`sudo cat /var/lib/jenkins/secrets/initialAdminPassword` && echo 'jenkins.model.Jenkins.instance.securityRealm.createAccount("allen", "123456")' | sudo java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -auth admin:$pass -s http://192.168.38.189:8080/ groovy =
+
