@@ -87,9 +87,9 @@ if [ $NOASK -eq 0 ]; then
     fi
 fi
 [ -z "${username}" -o -z "${password1}" ] && user_creator "${PURPLE}Create new admin user:${NC}"
-printf "${PURPLE}Waiting for server apply new admin user:${NC}\n"
+printf "${PURPLE}Waiting for server apply admin user:${NC}\n"
 sleep 60 && echo "jenkins.model.Jenkins.instance.securityRealm.createAccount(\"${username}\", \"${password1}\")" | sudo java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -auth admin:${initPasswd} -s http://localhost:8080/ groovy =
-[ $? -eq 0 ] && printf "%s\t%34s\033[0;32m %s \033[0m]\n\n" " * Apply new admin user to server   " "[" "OK" || printf "%s\t%34s\033[0;31m%s\033[0m]\n\n" " * Apply new admin user to server   " "[" "Fail"
+[ $? -eq 0 ] && printf "%s\t%34s\033[0;32m %s \033[0m]\n\n" " * Apply new admin user to Jenkins  " "[" "OK" || printf "%s\t%34s\033[0;31m%s\033[0m]\n\n" " * Apply new admin user to Jenkins  " "[" "Fail"
 printf "${LINE}\n\n${PURPLE}Packages Install Info:${NC}\n * Oracle Java Version:  \t[ ${GREEN}${JavaVer}${NC} ]\n"
 printf " * Jenkins Server Status:\t[ ${GREEN}Running${NC} ]\n"
 [ -z $initPasswd ] && printf " * Get Initial Admin Password:\t[${RED}Fail${NC}]\n\n" && initPasswd=None || printf " * Get Initial Admin Password:\t[ ${GREEN}OK${NC} ]\n\n"
