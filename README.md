@@ -24,4 +24,4 @@ Usage:
                     --full       Full install
       e.g., sh jenkins_server.sh -p --suggested
 ```
-
+echo 'jenkins.model.Jenkins.instance.securityRealm.createAccount("allen", "123456")' | java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://localhost/ groovy =
