@@ -1,5 +1,6 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
+. lib/print_usage
 . lib/CheckInstall.sh
 . lib/Notification.sh
 . lib/GethostIPAddr.sh
@@ -13,7 +14,16 @@ PROTOCOL=http
 
 CheckInstall Jenkins --install "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
 CheckPermission
-
+if [ $# -ne 0 ]; then
+    case $1 in
+    -p|--plugin)
+        case $2 in
+        --suggested) PluginInstall sug;;
+        --full) PluginInstall full;;
+        esac;;
+    * ) print_usage && exit 0;;
+    esac
+fi
 NetworkConnTest www.google.com && Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
 add-apt-repository ppa:webupd8team/java -y
 apt-get update
