@@ -3,6 +3,7 @@
 ## Description
 * *One click to install Jenkins server*
 * *Support SSL protocol to server*
+* *Provide manual install plugin user's prefer*
 
 ## How to update server IP or domain
 
