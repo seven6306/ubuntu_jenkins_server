@@ -3,8 +3,10 @@ user_creator()
 {
     local message="$1"
     printf "${message}\n"
-    while [ -z $username ]
+    while :
     do  read -p "Enter username: " username
+        [ -z "${username}" -o "${username}" = "admin" ] && printf "\033[0;31mERROR: invalid username.\033[0m\n" && continue
+        break
     done
     while :
     do  stty -echo
