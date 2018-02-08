@@ -23,7 +23,8 @@ if [ $# -ne 0 ]; then
         --full) PluginInstall full;;
         * ) print_usage && exit 0;;
         esac;;
-    -u|--update) [ "$2" = "-q" ] && sh update_server_IP.sh --quiet && exit 0;;
+    -u|--update) [ "$2" = "--quiet" ] && sh update_server_IP.sh -q || print_usage
+                 exit 0;;
     esac
 fi
 NetworkConnTest www.google.com && Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
