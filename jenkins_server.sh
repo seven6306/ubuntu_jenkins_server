@@ -16,12 +16,14 @@ CheckInstall Jenkins --install "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/shar
 CheckPermission
 if [ $# -ne 0 ]; then
     case $1 in
+    \?|-h|--help) print_usage && exit 0;;
     -p|--plugin)
         case $2 in
         --suggested) PluginInstall sug;;
         --full) PluginInstall full;;
+        * ) print_usage && exit 0;;
         esac;;
-    * ) print_usage && exit 0;;
+    #-u|--update) [ "$2" = "-q" ] &&;;
     esac
 fi
 NetworkConnTest www.google.com && Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
