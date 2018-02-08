@@ -23,6 +23,10 @@ fi
 if [ $# -ne 0 -a $NOASK -ne 1 ]; then
     CheckInstall Jenkins --remove "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
     case $1 in
+    -c|--create)
+        [ ! -z "${2}" -a ! -z "${3}" ] && [ `echo $2 | grep -c "username="` -ne 0 -a `echo $3 | grep -c "password="` -ne 0 ] && username=`echo $2 | cut -d \= -f2` && password1=`echo $3 | cut -d \= -f2` ||　print_usage
+        echo "jenkins.model.Jenkins.instance.securityRealm.createAccount(\"${username}\", \"${password1}\")" | sudo java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -auth admin:`sudo cat /var/lib/jenkins/secrets/initialAdminPassword` -s http://localhost:8080/ groovy =
+        [ $? -eq 0 ] && printf "%s\t%34s\033[0;32m %s \033[0m]\n\n" " * Apply new admin user to Jenkins  " "[" "OK" || printf "%s\t%34s\033[0;31m%s\033[0m]\n\n" " * Apply new admin user to Jenkins  " "[" "Fail";;
     -p|--plugin)
         case $2 in
         --suggested) PluginInstall sug;;
