@@ -16,28 +16,24 @@ PROTOCOL=http
 
 [ "$1" = '?' -o "$1" = "-h" -o "$1" = "--help" ] && print_usage && exit 0
 CheckPermission
-while :
-do
-    if [ $# -ne 0 ]; then
-        CheckInstall Jenkins --remove "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
-        case $1 in
-        -y|--yes)
-            [ ! -z "${2}" -a ! -z "${3}" ] && [ `echo $2 | grep -c "username="` -ne 0 -a `echo $3 | grep -c "password="` -ne 0 ] && username=`echo $2 | cut -d \= -f2` && password1=`echo $3 | cut -d \= -f2`
-            NOASK=1 && break;;
-        -p|--plugin)
-            case $2 in
-            --suggested) PluginInstall sug;;
-            --full) PluginInstall full;;
-            * ) print_usage;;
-            esac;;
-        -u|--update) [ "$2" = "--quiet" ] && sh update_server_IP.sh -q || print_usage;;
+if [ "$1" = "-y" -o "$1" = "--yes" ]; then
+    [ ! -z "${2}" -a ! -z "${3}" ] && [ `echo $2 | grep -c "username="` -ne 0 -a `echo $3 | grep -c "password="` -ne 0 ] && username=`echo $2 | cut -d \= -f2` && password1=`echo $3 | cut -d \= -f2`
+    NOASK=1
+fi
+if [ $# -ne 0 -a $NOASK -ne 1 ]; then
+    CheckInstall Jenkins --remove "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
+    case $1 in
+    -p|--plugin)
+        case $2 in
+        --suggested) PluginInstall sug;;
+        --full) PluginInstall full;;
         * ) print_usage;;
-        esac
-        exit 0
-    else
-        break
-    fi
-done
+        esac;;
+    -u|--update) [ "$2" = "--quiet" ] && sh update_server_IP.sh -q || print_usage;;
+    * ) print_usage;;
+    esac
+    exit 0
+fi
 CheckInstall Jenkins --install "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
 NetworkConnTest www.google.com
 [ $NOASK -eq 0 ] && Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
