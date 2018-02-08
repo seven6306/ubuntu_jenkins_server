@@ -5,7 +5,7 @@
 * *Support SSL protocol to server*
 * *Provide manual install plugin user's prefer*
 
-## How to update server IP or domain
+## Script Usage
 
 ```javascript
 Usage:
@@ -17,6 +17,8 @@ Usage:
       -h, --help    Show script usage
       -u, --update  Manual update jenkins server IP address
                     --quiet      Force to update
+      e.g., sh jenkins_server.sh -u --quiet
+
       -p, --plugin  Install Jenkins plugin with [ARGV1]
                     --suggested  Suggested plugins
                     --full       Full install
