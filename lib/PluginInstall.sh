@@ -16,7 +16,7 @@ PluginInstall()
     do  java -jar $Jcli -s http://`GethostIPAddr`:8080/ install-plugin $plugin
     done
     rm -f /var/lib/jenkins/config.xml && cp -r /var/lib/jenkins/config.xml.bak /var/lib/jenkins/config.xml
-    printf "${PURPLE}Restoring jenkins config to security mode:${NC}\n"
+    printf "\n${PURPLE}Restoring jenkins config to security mode:${NC}\n"
     service jenkins restart
     printf "\n${LINE}\n\n" && return 0
 }
