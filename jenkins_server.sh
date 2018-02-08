@@ -9,28 +9,35 @@
 . lib/CheckPermission.sh
 . lib/NetworkConnTest.sh
 . lib/declare_variables.sh
+NOASK=0
 COUNTER=10
 PORT=8080
 PROTOCOL=http
 
 [ "$1" = '?' -o "$1" = "-h" -o "$1" = "--help" ] && print_usage && exit 0
 CheckPermission
-if [ $# -ne 0 ]; then
-    CheckInstall Jenkins --remove "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
-    case $1 in
-    -p|--plugin)
-        case $2 in
-        --suggested) PluginInstall sug;;
-        --full) PluginInstall full;;
+while :
+    if [ $# -ne 0 ]; then
+        CheckInstall Jenkins --remove "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
+        case $1 in
+        -y|--yes)
+            [ ! -z "${2}" -a ! -z "${3}" ] && [ `echo $2 | grep -c "username="` -ne 0 -a `echo $3 | grep -c "password="` -ne 0 ] && username=`echo $2 | cut -d \= -f2` && password1=`echo $3 | cut -d \= -f2`
+            NOASK=1 && break;;
+        -p|--plugin)
+            case $2 in
+            --suggested) PluginInstall sug;;
+            --full) PluginInstall full;;
+            * ) print_usage;;
+            esac;;
+        -u|--update) [ "$2" = "--quiet" ] && sh update_server_IP.sh -q || print_usage;;
         * ) print_usage;;
-        esac;;
-    -u|--update) [ "$2" = "--quiet" ] && sh update_server_IP.sh -q || print_usage;;
-    * ) print_usage;;
-    esac
-    exit 0
-fi
+        esac
+        exit 0
+    fi
+done
 CheckInstall Jenkins --install "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
-NetworkConnTest www.google.com && Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
+NetworkConnTest www.google.com
+[ $NOASK -eq 1 ] && Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
 add-apt-repository ppa:webupd8team/java -y
 apt-get update
 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
@@ -58,10 +65,10 @@ done
 JavaVer=`java -version 2>&1 | grep "java version" | awk -F\" '{print $2}'`
 [ `service jenkins status | grep -co not` -ne 0 ] && printf "\n${RED}Sorry, jenkins server is unavailable...${NC}\n\n" && exit 1
 PluginInstall sug
-user_creator "${PURPLE}Create new admin user:${NC}"
+[ -z "${username}" -o -z "${password1}" ] && user_creator "${PURPLE}Create new admin user:${NC}"
 echo "jenkins.model.Jenkins.instance.securityRealm.createAccount(\"${username}\", \"${password1}\")" | java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -auth admin:${initPasswd} -s http://`GethostIPAddr`:8080/ groovy =
 
-Notification "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n"
+[ $NOASK -eq 1 ] && Notification "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n"
 if [ $? -eq 0 ]; then
     if [ `dpkg -l | grep -c nginx` -gt 1 -a -f /etc/nginx/sites-enabled/default ]; then
         sed -i 's,try_files $uri $uri/ =404;,# try_files $uri $uri/ =404;,g' /etc/nginx/sites-enabled/default
