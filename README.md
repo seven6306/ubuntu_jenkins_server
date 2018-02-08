@@ -11,5 +11,7 @@ Usage:
       sh update_server_IP.sh [OPTION]
       -h, --help    Show script usage
       -q, --quiet   Force to update jenkins server IP address
+      sh jenkins_server.sh [OPTION] [ARGV1]
+      -f, --quiet   
 ```
 
