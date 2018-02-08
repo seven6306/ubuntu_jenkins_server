@@ -7,7 +7,6 @@ PluginInstall()
         full) local regx='\"name\": ';;
     esac
     printf "\n${LINE}\n${PURPLE}Starting install Jenkins suggested plugins:${NC}\n${LINE}\n"
-    java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://`GethostIPAddr`:8080/ login --username "jenkins" --password "123456"
     for plugin in `grep -E "$regx" suggested_plugin_list.json | awk -F\" '{print $4}'`
     do  java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://`GethostIPAddr`:8080/ install-plugin $plugin
     done
