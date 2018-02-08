@@ -15,7 +15,8 @@ Usage:
 
       sh jenkins_server.sh [OPTION] [ARGV1]
       -h, --help    Show script usage
-      -q, --quiet   Force to update jenkins server IP address
+      -u, --update  Manual update jenkins server IP address
+                    --quiet      Force to update
       -p, --plugin  Install Jenkins plugin with [ARGV1]
                     --suggested  Suggested plugins
                     --full       Full install
