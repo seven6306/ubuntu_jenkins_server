@@ -17,6 +17,7 @@ PROTOCOL=http
 [ "$1" = '?' -o "$1" = "-h" -o "$1" = "--help" ] && print_usage && exit 0
 CheckPermission
 while :
+do
     if [ $# -ne 0 ]; then
         CheckInstall Jenkins --remove "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
         case $1 in
