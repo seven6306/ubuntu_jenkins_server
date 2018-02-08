@@ -1,9 +1,10 @@
 # Ubuntu_Jenkins_Server
 
 ## Description
-* *One click to install Jenkins server*
+* *One command line to quickly install Jenkins server*
 * *Support SSL protocol to server*
 * *Provide manual install plugin user's prefer*
+* *Create Jenkins admin user customize*
 
 ## Script Usage
 
