@@ -20,6 +20,10 @@ Usage:
       e.g., sh jenkins_server.sh -y username=test password=123456
 
       -h, --help    Show script usage
+      -c, --create  Create an admin user after Jenkins installed
+                    username=[adminUser] password=[adminPassword]
+      e.g., sh jenkins_server.sh -c username=test password=123456
+
       -u, --update  Manual update jenkins server IP address
                     --quiet      Force to update
       e.g., sh jenkins_server.sh -u --quiet
