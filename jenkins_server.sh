@@ -29,7 +29,8 @@ if [ $# -ne 0 -a $NOASK -ne 1 ]; then
         --full) PluginInstall full;;
         * ) print_usage;;
         esac;;
-    -u|--update) [ "$2" = "--quiet" ] && sh update_server_IP.sh -q || print_usage;;
+    -u|--update) [ "$2" != "--quiet" ] && print_usage && exit 1
+                 sh update_server_IP.sh -q;;
     * ) print_usage;;
     esac
     exit 0
