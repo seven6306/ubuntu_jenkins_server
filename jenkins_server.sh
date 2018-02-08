@@ -25,6 +25,7 @@ if [ $# -ne 0 ]; then
         esac;;
     -u|--update) [ "$2" = "--quiet" ] && sh update_server_IP.sh -q || print_usage
                  exit 0;;
+    * ) print_usage && exit 0;;
     esac
 fi
 CheckInstall Jenkins --install "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
