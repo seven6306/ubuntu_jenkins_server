@@ -1,6 +1,7 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
 . lib/print_usage.sh
+. lib/user_creator.sh
 . lib/CheckInstall.sh
 . lib/Notification.sh
 . lib/GethostIPAddr.sh
@@ -48,15 +49,18 @@ do  for i in '.' '..' '...' '....'
     do  printf "${PURPLE}Getting initial admin password${i}${NC}\n"
         sleep 2
         tput cuu1 && tput el
-		[ -f /var/lib/jenkins/secrets/initialAdminPassword ] && initPasswd=`sudo cat /var/lib/jenkins/secrets/initialAdminPassword` && break
+        [ -f /var/lib/jenkins/secrets/initialAdminPassword ] && initPasswd=`sudo cat /var/lib/jenkins/secrets/initialAdminPassword` && break
     done
-	[ ! -z $initPasswd ] && break
+    [ ! -z $initPasswd ] && break
     COUNTER=$(($COUNTER - 1))
     printf "Retry times remain: ${RED}${COUNTER}${NC}\n" && sleep 2
 done
 JavaVer=`java -version 2>&1 | grep "java version" | awk -F\" '{print $2}'`
 [ `service jenkins status | grep -co not` -ne 0 ] && printf "\n${RED}Sorry, jenkins server is unavailable...${NC}\n\n" && exit 1
-#PluginInstall sug
+PluginInstall sug
+user_creator "${PURPLE}Create new admin user:${NC}"
+echo 'jenkins.model.Jenkins.instance.securityRealm.createAccount("${username}", "${password1}")' | java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -auth admin:${initPasswd} -s http://`GethostIPAddr`:8080/ groovy =
+
 Notification "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n"
 if [ $? -eq 0 ]; then
     if [ `dpkg -l | grep -c nginx` -gt 1 -a -f /etc/nginx/sites-enabled/default ]; then
