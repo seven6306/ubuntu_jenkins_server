@@ -7,4 +7,5 @@ print_usage()
     for i in `seq $line_on $line_down`
     do  cat README.md | sed -n ${i}p
     done
+    printf "\n"
 }
