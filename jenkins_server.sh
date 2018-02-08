@@ -93,4 +93,4 @@ sleep 60 && echo "jenkins.model.Jenkins.instance.securityRealm.createAccount(\"$
 printf "${LINE}\n\n${PURPLE}Packages Install Info:${NC}\n * Oracle Java Version:  \t[ ${GREEN}${JavaVer}${NC} ]\n"
 printf " * Jenkins Server Status:\t[ ${GREEN}Running${NC} ]\n"
 [ -z $initPasswd ] && printf " * Get Initial Admin Password:\t[${RED}Fail${NC}]\n\n" && initPasswd=None || printf " * Get Initial Admin Password:\t[ ${GREEN}OK${NC} ]\n\n"
-printf "${LINE}\n\n${PURPLE}Jenkins Server Info:${NC}\n * Server site - ${GREEN}${PROTOCOL}://`GethostIPAddr`${NC}${RED}:${PORT}${NC}\n * Init Password - ${RED}${initPasswd}${NC}\n\n"
+printf "${LINE}\n\n${PURPLE}Jenkins Server Info:${NC}\n * Server site - ${GREEN}${PROTOCOL}://`GethostIPAddr`${NC}${RED}:${PORT}${NC}\n * Init Password - ${RED}${initPasswd}${NC}\n * Admin User - ${GREEN}${username}${NC}\n * Password - ${GREEN}`echo ${password1} | sed "s,.,*,g"`${NC}\n\n"
