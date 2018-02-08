@@ -6,7 +6,7 @@
 . lib/declare_variables.sh
 
 [ "$1" = "-h" -o "$1" = "--help" ] && printf "Usage: sh update_server_IP.sh [OPTION]\n       -q,   --quiet       Force to update jenkins server IP address.\n" && exit 0
-CheckPermission && CheckInstall "Jenkins and Nginx" --remove "/etc/init.d/jenkins,/usr/sbin/nginx" "/var/lib/jenkins,/usr/share/jenkins,/etc/nginx,/usr/local/nginx"
+CheckPermission && CheckInstall "Jenkins_Nginx" --remove "/etc/init.d/jenkins,/usr/sbin/nginx" "/var/lib/jenkins,/usr/share/jenkins,/etc/nginx,/usr/local/nginx"
 case $1 in
     -q|--quiet) server_name=`GethostIPAddr`;;
     *) printf "To update jenkins server name (Default: localhost),\n" && read -p "please input IP or domain name: " server_name;;
