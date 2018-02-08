@@ -21,12 +21,12 @@ if [ $# -ne 0 ]; then
         case $2 in
         --suggested) PluginInstall sug;;
         --full) PluginInstall full;;
-        * ) print_usage && exit 0;;
+        * ) print_usage;;
         esac;;
-    -u|--update) [ "$2" = "--quiet" ] && sh update_server_IP.sh -q || print_usage
-                 exit 0;;
-    * ) print_usage && exit 0;;
+    -u|--update) [ "$2" = "--quiet" ] && sh update_server_IP.sh -q || print_usage;;
+    * ) print_usage;;
     esac
+    exit 0
 fi
 CheckInstall Jenkins --install "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
 NetworkConnTest www.google.com && Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
