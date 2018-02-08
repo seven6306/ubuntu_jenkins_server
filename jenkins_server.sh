@@ -3,6 +3,7 @@
 . lib/CheckInstall.sh
 . lib/Notification.sh
 . lib/GethostIPAddr.sh
+. lib/PluginInstall.sh
 . lib/CheckPermission.sh
 . lib/NetworkConnTest.sh
 . lib/declare_variables.sh
@@ -11,9 +12,9 @@ PORT=8080
 PROTOCOL=http
 
 CheckInstall Jenkins --install "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
-CheckPermission && NetworkConnTest www.google.com
+CheckPermission
 
-Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
+NetworkConnTest www.google.com && Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
 add-apt-repository ppa:webupd8team/java -y
 apt-get update
 echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
