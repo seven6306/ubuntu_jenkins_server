@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
-. lib/print_usage
+. lib/print_usage.sh
 . lib/CheckInstall.sh
 . lib/Notification.sh
 . lib/GethostIPAddr.sh
