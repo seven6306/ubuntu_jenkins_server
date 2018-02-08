@@ -12,6 +12,7 @@ PROTOCOL=http
 
 CheckInstall Jenkins --install "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
 CheckPermission && NetworkConnTest www.google.com
+
 Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
 add-apt-repository ppa:webupd8team/java -y
 apt-get update
@@ -40,12 +41,6 @@ done
 JavaVer=`java -version 2>&1 | grep "java version" | awk -F\" '{print $2}'`
 [ `service jenkins status | grep -co not` -ne 0 ] && printf "\n${RED}Sorry, jenkins server is unavailable...${NC}\n\n" && exit 1
 
-[ ! -f suggested_plugin_list.json ] && printf "${RED}ERROR: file suggested_plugin_list.json is missing.${NC}\n" && exit 1
-printf "\n${LINE}\n${PURPLE}Starting install Jenkins suggested plugins:${NC}\n${LINE}\n"
-for plugin in `grep -E "\"suggested\": true" suggested_plugin_list.json | awk -F\" '{print $4}'`
-do  java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://`GethostIPAddr`:8080/ install-plugin $plugin
-done
-printf "\n${LINE}\n\n"
 Notification "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n"
 if [ $? -eq 0 ]; then
     if [ `dpkg -l | grep -c nginx` -gt 1 -a -f /etc/nginx/sites-enabled/default ]; then
