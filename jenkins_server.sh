@@ -34,6 +34,8 @@ do
         * ) print_usage;;
         esac
         exit 0
+    else
+        break
     fi
 done
 CheckInstall Jenkins --install "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
