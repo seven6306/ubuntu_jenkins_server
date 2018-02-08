@@ -9,7 +9,7 @@
 
 ```javascript
 Usage:
-      Script additional function notice:
+      Script additional functions notice:
       You nust be use below listed options after Jenkins has been
       installed.
 
