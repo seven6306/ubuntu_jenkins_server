@@ -1,7 +1,4 @@
 #!/bin/bash.
-. GethostIPAddr.sh
-. declare_variables.sh
-
 PluginInstall()
 {
     [ ! -f suggested_plugin_list.json ] && printf "${RED}ERROR: file suggested_plugin_list.json is missing.${NC}\n" && exit 1
