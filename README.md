@@ -17,6 +17,7 @@ Usage:
       -y, --yes     No required question but user create
                     username=[adminUser] password=[adminPassword]
       e.g., sh jenkins_server.sh -y username=test password=123456
+
       -h, --help    Show script usage
       -u, --update  Manual update jenkins server IP address
                     --quiet      Force to update
