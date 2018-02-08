@@ -7,7 +7,7 @@ PluginInstall()
     [ ! -f suggested_plugin_list.json ] && printf "${RED}ERROR: file suggested_plugin_list.json is missing.${NC}\n" && exit 1
     case $1 in
         sug) local regx='\"suggested\": true';;
-        all) local regx='\"name\": ';;
+        full) local regx='\"name\": ';;
     esac
     printf "\n${LINE}\n${PURPLE}Starting install Jenkins suggested plugins:${NC}\n${LINE}\n"
     for plugin in `grep -E $regx suggested_plugin_list.json | awk -F\" '{print $4}'`
