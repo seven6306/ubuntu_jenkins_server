@@ -1,14 +1,16 @@
 #!/bin/bash.
 PluginInstall()
 {
+    local Jcli=/var/cache/jenkins/war/WEB-INF/jenkins-cli.jar
     [ ! -f suggested_plugin_list.json ] && printf "${RED}ERROR: file suggested_plugin_list.json is missing.${NC}\n" && exit 1
     case $1 in
         sug) local regx='\"suggested\": true';;
         full) local regx='\"name\": ';;
     esac
     printf "\n${LINE}\n${PURPLE}Starting install Jenkins suggested plugins:${NC}\n${LINE}\n"
+    java -jar $Jcli -s http://`GethostIPAddr`:8080/ login --username "jenkins" --password "123456"
     for plugin in `grep -E "$regx" suggested_plugin_list.json | awk -F\" '{print $4}'`
-    do  java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -s http://`GethostIPAddr`:8080/ install-plugin $plugin
+    do  java -jar $Jcli -s http://`GethostIPAddr`:8080/ install-plugin $plugin
     done
     printf "\n${LINE}\n\n" && return 0
 }
