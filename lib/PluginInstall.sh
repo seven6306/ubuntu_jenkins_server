@@ -8,8 +8,11 @@ PluginInstall()
         full) local regx='\"name\": ';;
     esac
     printf "\n${LINE}\n${PURPLE}Starting install Jenkins suggested plugins:${NC}\n${LINE}\n"
+    printf " * Backup jenkins config: ${RED}\"/var/lib/jenkins/config.xml\"${NC}\n * Unlock jenkins security to modify configuration."
+    sed -i.bak 's,\ \ <useSecurity>true</useSecurity>,\ \ <useSecurity>false</useSecurity>,g' /var/lib/jenkins/config.xml
     for plugin in `grep -E "$regx" suggested_plugin_list.json | awk -F\" '{print $4}'`
     do  java -jar $Jcli -s http://`GethostIPAddr`:8080/ install-plugin $plugin
     done
-    printf "\n${LINE}\n\n" && return 0
+    rm -f /var/lib/jenkins/config.xml && cp -r /var/lib/jenkins/config.xml.bak /var/lib/jenkins/config.xml
+    printf " * Restoring jenkins config to security mode.\n\n${LINE}\n\n" && return 0
 }
