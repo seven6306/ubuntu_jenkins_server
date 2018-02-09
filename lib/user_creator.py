@@ -20,6 +20,6 @@ if __name__ == '__main__':
             break
         if len(argv) > 2:
             if argv[2] == '--showinfo':
-                print 'Username: {0} Password: {1}'.format(username, password1)
+                print '{0};{1}'.format(username, password1)
     else:
         print 'Usage: python user_creator.py [Message] --showinfo'
