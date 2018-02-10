@@ -5,7 +5,7 @@ from getpass import getpass
 if __name__ == '__main__':
     if len(argv) > 1:
         message, username = argv[1], ''
-        print message
+        print '\033[1;35m' + message + '\033[0m'
         while(username == ''):
             username = raw_input('Enter username: ')
         while(True):
