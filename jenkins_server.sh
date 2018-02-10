@@ -93,7 +93,7 @@ if [ $NOASK -eq 0 ]; then
         fi
     fi
 fi
-[ -z "${username}" -o -z "${password1}" ] && user_creator "${PURPLE}Create new admin user:${NC}"
+[ -z "${username}" -o -z "${password1}" ] && python lib/user_creator.py "${PURPLE}Create new admin user:${NC}" && source /tmp/account.cache && rm -f /tmp/account.cache
 printf "${PURPLE}Waiting for server apply admin user:${NC}\n"
 sleep 60 && echo "jenkins.model.Jenkins.instance.securityRealm.createAccount(\"${username}\", \"${password1}\")" | sudo java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -auth admin:${initPasswd} -s http://localhost:8080/ groovy =
 [ $? -eq 0 ] && printf "%s\t%34s\033[0;32m %s \033[0m]\n\n" " * Apply new admin user to Jenkins  " "[" "OK" || printf "%s\t%34s\033[0;31m%s\033[0m]\n\n" " * Apply new admin user to Jenkins  " "[" "Fail"
