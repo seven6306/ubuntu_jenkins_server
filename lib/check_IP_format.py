@@ -16,6 +16,6 @@ def valid_ip(Addr):
         return False
 if __name__ == '__main__':
     if len(argv) > 1:
-        print(valid_ip(argv[1]))
+        print valid_ip(argv[1])
     else:
-        print('Usage: python check_IP_format.py [IPAddr]')
+        print 'Usage: python check_IP_format.py [IPAddr]'
