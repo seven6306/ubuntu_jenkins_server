@@ -25,8 +25,7 @@ if __name__ == '__main__':
                 print '{0};{1}'.format(username, password1)
         if isfile('/tmp/account.cache'):
             remove('/tmp/account.cache')
-        cache = open('/tmp/account.cache', 'w')
-        cache.write('username={0};password1={1}'.format(username, password1))
-        cache.close()
+        with open('/tmp/account.cache', 'w') as cache:
+            cache.write('username={0};password1={1}'.format(username, password1))
     else:
         print 'Usage: python user_creator.py [Message] --showinfo'
