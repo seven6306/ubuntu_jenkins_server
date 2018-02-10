@@ -1,7 +1,5 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
-. lib/print_usage.sh
-. lib/user_creator.sh
 . lib/CheckInstall.sh
 . lib/Notification.sh
 . lib/GethostIPAddr.sh
@@ -14,7 +12,7 @@ COUNTER=10
 PORT=8080
 PROTOCOL=http
 
-[ "$1" = '?' -o "$1" = "-h" -o "$1" = "--help" ] && print_usage && exit 0
+[ "$1" = '?' -o "$1" = "-h" -o "$1" = "--help" ] && python lib/print_usage.py && exit 0
 CheckPermission
 if [ "$1" = "-y" -o "$1" = "--yes" ]; then
     [ "${2}" = "admin" ] && printf "${RED}ERROR: can not create super user.${NC}\n" && exit 1
@@ -26,18 +24,18 @@ if [ $# -ne 0 -a $NOASK -ne 1 ]; then
     case $1 in
     -c|--create)
         [ "${2}" = "admin" -o -z "${2}" -o -z "${3}" -o `echo $2 | grep -c "username="` -eq 0 -o `echo $3 | grep -c "password="` -eq 0 ] && printf "${RED}ERROR: invalid username or password.${NC}\n" && exit 1
-        username=`echo $2 | cut -d \= -f2` && password1=`echo $3 | cut -d \= -f2` ||　print_usage
+        username=`echo $2 | cut -d \= -f2` && password1=`echo $3 | cut -d \= -f2` || python lib/print_usage.py
         echo "jenkins.model.Jenkins.instance.securityRealm.createAccount(\"${username}\", \"${password1}\")" | sudo java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -auth admin:`sudo cat /var/lib/jenkins/secrets/initialAdminPassword` -s http://localhost:8080/ groovy =
         [ $? -eq 0 ] && printf "%s\t%34s\033[0;32m %s \033[0m]\n\n" " * Apply new admin user to Jenkins  " "[" "OK" || printf "%s\t%34s\033[0;31m%s\033[0m]\n\n" " * Apply new admin user to Jenkins  " "[" "Fail";;
     -p|--plugin)
         case $2 in
         --suggested) PluginInstall sug;;
         --full) PluginInstall full;;
-        * ) print_usage;;
+        * ) python lib/print_usage.py;;
         esac;;
-    -u|--update) [ "$2" != "--quiet" ] && print_usage && exit 1
+    -u|--update) [ "$2" != "--quiet" ] && python lib/print_usage.py && exit 1
                  sh update_server_IP.sh -q;;
-    * ) print_usage;;
+    * ) python lib/print_usage.py;;
     esac
     exit 0
 fi
