@@ -1,5 +1,7 @@
 #!/usr/bin/python
 from sys import argv
+from os import remove
+from os.path import isfile
 from getpass import getpass
 
 if __name__ == '__main__':
@@ -21,5 +23,10 @@ if __name__ == '__main__':
         if len(argv) > 2:
             if argv[2] == '--showinfo':
                 print '{0};{1}'.format(username, password1)
+        if isfile('/tmp/account.cache'):
+            remove('/tmp/account.cache')
+        cache = open('/tmp/account.cache', 'w')
+        cache.write('username={0};password1={1}'.format(username, password1))
+        cache.close()
     else:
         print 'Usage: python user_creator.py [Message] --showinfo'
