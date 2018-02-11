@@ -8,9 +8,10 @@ def gethostIPaddr(dst, port):
         host.connect((dst, port))
         ip = host.getsockname()[0]
         host.close()
-        return(ip)
+        return ip
     except Exception as err:
         print str(err)
+        return 255
 
 if __name__ == '__main__':
     try:
