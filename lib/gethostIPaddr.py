@@ -1,5 +1,5 @@
 #!/usr/bin/python
-from sys import argv
+from sys import argv, exit
 from socket import socket, AF_INET, SOCK_DGRAM
 
 def gethostIPaddr(dst, port):
@@ -11,7 +11,7 @@ def gethostIPaddr(dst, port):
         return ip
     except Exception as err:
         print str(err)
-        return 255
+        exit(255)
 
 if __name__ == '__main__':
     try:
