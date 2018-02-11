@@ -6,7 +6,7 @@
 * *Provide manual install plugin user's prefer*
 * *Create Jenkins admin user customize*
 
-## Script Usage
+## How to use it
 
 ```javascript
 Usage:
