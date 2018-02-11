@@ -13,7 +13,7 @@ PluginInstall()
     service jenkins restart
     sleep 60
     for plugin in `grep -E "$regx" suggested_plugin_list.json | awk -F\" '{print $4}'`
-    do  java -jar $Jcli -s http://`GethostIPAddr`:8080/ install-plugin $plugin
+    do  java -jar $Jcli -s http://`python lib/gethostIPaddr.py`:8080/ install-plugin $plugin
     done
     rm -f /var/lib/jenkins/config.xml && cp -r /var/lib/jenkins/config.xml.bak /var/lib/jenkins/config.xml
     printf "${LINE}\n\n${PURPLE}Restoring jenkins config to security mode:${NC}\n"
