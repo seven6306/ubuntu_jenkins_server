@@ -2,7 +2,6 @@
 # Script for ubuntu 14.04 LTS
 . lib/CheckInstall.sh
 . lib/Notification.sh
-. lib/GethostIPAddr.sh
 . lib/PluginInstall.sh
 . lib/CheckPermission.sh
 . lib/NetworkConnTest.sh
@@ -76,7 +75,7 @@ if [ $NOASK -eq 0 ]; then
     if [ $? -eq 0 ]; then
         if [ `dpkg -l | grep -c nginx` -gt 1 -a -f /etc/nginx/sites-enabled/default ]; then
             sed -i 's,try_files $uri $uri/ =404;,# try_files $uri $uri/ =404;,g' /etc/nginx/sites-enabled/default
-            for each_line in "proxy_redirect      http://localhost:8080 https://`GethostIPAddr`;" 'proxy_read_timeout  90;' 'proxy_pass          http://localhost:8080;' '# Fix the “It appears that your reverse proxy set up is broken" error.'
+            for each_line in "proxy_redirect      http://localhost:8080 https://`python lib/gethostIPaddr.py`;" 'proxy_read_timeout  90;' 'proxy_pass          http://localhost:8080;' '# Fix the “It appears that your reverse proxy set up is broken" error.'
             do  sed -i "/\#\ include\ \/etc\/nginx\/naxsi\.rules/ a \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ${each_line}" /etc/nginx/sites-enabled/default
             done
             sed -i 's,\--webroot=\/var\/cache\/$NAME\/war\ \--httpPort=\$HTTP_PORT,\--webroot=\/var\/cache\/$NAME\/war\ \--httpPort=\$HTTP_PORT\ \--httpListenAddress=127\.0\.0\.1\ \-ajp13Port=\$AJP_PORT,g' /etc/default/jenkins
@@ -98,4 +97,4 @@ sleep 60 && echo "jenkins.model.Jenkins.instance.securityRealm.createAccount(\"$
 printf "${LINE}\n\n${PURPLE}Packages Install Info:${NC}\n * Oracle Java Version:  \t[ ${GREEN}${JavaVer}${NC} ]\n"
 printf " * Jenkins Server Status:\t[ ${GREEN}Running${NC} ]\n"
 [ -z $initPasswd ] && printf " * Get Initial Admin Password:\t[${RED}Fail${NC}]\n\n" && initPasswd=None || printf " * Get Initial Admin Password:\t[ ${GREEN}OK${NC} ]\n\n"
-printf "${LINE}\n\n${PURPLE}Jenkins Server Info:${NC}\n * Server site - ${GREEN}${PROTOCOL}://`GethostIPAddr`${NC}${RED}:${PORT}${NC}\n * Init Password - ${RED}${initPasswd}${NC}\n * Admin User - ${GREEN}${username}${NC}\n * Password - ${GREEN}`echo ${password1} | sed "s,.,*,g"`${NC}\n\n"
+printf "${LINE}\n\n${PURPLE}Jenkins Server Info:${NC}\n * Server site - ${GREEN}${PROTOCOL}://`python lib/gethostIPaddr.py`${NC}${RED}:${PORT}${NC}\n * Init Password - ${RED}${initPasswd}${NC}\n * Admin User - ${GREEN}${username}${NC}\n * Password - ${GREEN}`echo ${password1} | sed "s,.,*,g"`${NC}\n\n"
