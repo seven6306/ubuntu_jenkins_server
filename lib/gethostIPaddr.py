@@ -11,7 +11,7 @@ def gethostIPaddr(dst, port):
         return ip
     except Exception as err:
         print str(err)
-        exit(255)
+        raise SystemExit
 
 if __name__ == '__main__':
     try:
@@ -20,5 +20,7 @@ if __name__ == '__main__':
         else:
             IP, Port = '8.8.8.8', 80
         print gethostIPaddr(IP, int(Port))
+    except SystemExit:
+        exit(255)
     except:
         print 'Usage: python gethostIPaddr.py [Dst_IP:Port]\n       e.g., python gethostIPaddr.py 8.8.8.8:80'
