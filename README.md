@@ -11,7 +11,7 @@
 ```javascript
 Usage:
       Script additional functions notice:
-      You nust be use below listed options after Jenkins has been
+      Before use below listed options, make sure Jenkins has been
       installed.
 
       sh jenkins_server.sh [OPTION] [ARGV1]
