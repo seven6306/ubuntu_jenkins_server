@@ -11,6 +11,7 @@ def Waiting(message, delay):
             stdout.flush()
             sleep(1)
         stdout.write(' '*(len(message)+5)+'\r')
+        stdout.write(' '*(len(message)+5)+'\r')
     print ''
 
 if __name__ == '__main__':
