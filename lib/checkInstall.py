@@ -4,11 +4,11 @@ from apt import Cache
 from os.path import isfile, isdir
 
 def checkInstall(pkgName, action, files):
-    x, f_list, apt_cache = 0, files.split(','), Cache()
+    x, y, f_list, apt_cache = 0, 0, files.split(','), Cache()
     try:
         for e in pkgName.split('_'):
             if apt_cache[e].is_installed:
-                x = x + 1
+                x, y = x + 1, y + 1
     except:
         pass
     for i in f_list:
@@ -17,7 +17,7 @@ def checkInstall(pkgName, action, files):
     if '--install' in action and x != 0:
         print "\033[0;31mERROR: {} is already installed.\033[0m".format(pkgName)
         return False
-    elif '--remove' in action and x != len(f_list):
+    elif '--remove' in action and x != len(f_list)+y:
         print "\033[0;31mERROR: {} is not installed.\033[0m\n".format(pkgName)
         return False
     print "%s\t%34s\033[0;32m %s \033[0m]" % (" * Check if {} is installed      ".format(pkgName), "[", "OK")
