@@ -1,6 +1,6 @@
 SSLconfigure()
 {
-    python lib/notification.py "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n"
+    [ $NOASK -eq 0 ] && python lib/notification.py "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n" || printf ""
     if [ $? -eq 0 ]; then
         python lib/checkInstall.py nginx --remove "/etc/init.d/nginx,/usr/sbin/nginx,/usr/share/nginx,/etc/nginx/sites-enabled/default"
         [ `grep -cE "proxy_redirect|proxy_read_timeout|https://" /etc/nginx/sites-enabled/default` -ne 0 ] && printf "${RED}ERROR: Jenkins server is already configure to SSL.${NC}\n" && return 1
@@ -12,8 +12,8 @@ SSLconfigure()
         service nginx restart
         service jenkins restart
         case $? in
-            0) printf "%s\t%34s\033[0;32m %s \033[0m]\n\n" " * Configure jenkins server with SSL" "[" "OK" && PORT=443 && PROTOCOL=https
-               printf " * Jenkins site - ${GREEN}https://`python lib/gethostIPaddr.py`${NC}${RED}:${PORT}${NC} (https)\n";;
+            0) printf "%s\t%34s\033[0;32m %s \033[0m]\n" " * Configure jenkins server with SSL" "[" "OK" && PORT=443 && PROTOCOL=https
+               printf " * Jenkins site - ${GREEN}https://`python lib/gethostIPaddr.py`${NC}${RED}:${PORT}${NC} (https)\n\n";;
             *) printf "%s\t%34s\033[0;31m%s\033[0m]\n\n" " * Configure jenkins server with SSL" "[" "Fail" && exit 1;;
         esac
     fi
