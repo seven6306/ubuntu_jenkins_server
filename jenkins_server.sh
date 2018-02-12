@@ -32,7 +32,7 @@ if [ $# -ne 0 -a $NOASK -ne 1 ]; then
         esac;;
     -u|--update) [ "$2" != "--quiet" ] && python lib/print_usage.py README.md && exit 1
                  sh update_server_IP.sh -q;;
-    -s|--sslconf) SSLconfigure && exit 0;;
+    -s|--sslconf) SSLconfigure;;
     * ) python lib/print_usage.py README.md;;
     esac
     exit 0
