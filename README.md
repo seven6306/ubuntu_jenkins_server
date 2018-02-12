@@ -15,22 +15,24 @@ Usage:
       installed.
 
       sh jenkins_server.sh [OPTION] [ARGV1]
-      -y, --yes     No required question but user create
-                    username=[adminUser] password=[adminPassword]
+      -s, --sslconf   Configure jenkins with SSL(https), the nginx
+                      server is requirement
+      -y, --yes       No required question but user create
+                      username=[adminUser] password=[adminPassword]
       e.g., sh jenkins_server.sh -y username=test password=123456
 
-      -h, --help    Show script usage
-      -c, --create  Create an admin user after Jenkins installed
-                    username=[adminUser] password=[adminPassword]
+      -h, --help      Show script usage
+      -c, --create    Create an admin user after Jenkins installed
+                      username=[adminUser] password=[adminPassword]
       e.g., sh jenkins_server.sh -c username=test password=123456
 
-      -u, --update  Manual update jenkins server IP address
-                    --quiet      Force to update
+      -u, --update    Manual update jenkins server IP address
+                      --quiet      Force to update
       e.g., sh jenkins_server.sh -u --quiet
 
-      -p, --plugin  Install Jenkins plugin with [ARGV1]
-                    --suggested  Suggested plugins
-                    --full       Full install
+      -p, --plugin    Install Jenkins plugin with [ARGV1]
+                      --suggested  Suggested plugins
+                      --full       Full install
       e.g., sh jenkins_server.sh -p --suggested
 ```
 
