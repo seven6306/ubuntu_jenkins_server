@@ -2,7 +2,6 @@
 # Script for ubuntu 14.04 LTS
 . lib/Notification.sh
 . lib/PluginInstall.sh
-. lib/CheckPermission.sh
 . lib/NetworkConnTest.sh
 . lib/declare_variables.sh
 NOASK=0
@@ -11,7 +10,7 @@ PORT=8080
 PROTOCOL=http
 
 [ "$1" = '?' -o "$1" = "-h" -o "$1" = "--help" ] && python lib/print_usage.py README.md && exit 0
-CheckPermission
+python lib/checkPermission.py || exit 1
 if [ "$1" = "-y" -o "$1" = "--yes" ]; then
     [ "${2}" = "admin" ] && printf "${RED}ERROR: can not create super user.${NC}\n" && exit 1
     [ ! -z "${2}" -a ! -z "${3}" ] && [ `echo $2 | grep -c "username="` -ne 0 -a `echo $3 | grep -c "password="` -ne 0 ] && username=`echo $2 | cut -d \= -f2` && password1=`echo $3 | cut -d \= -f2`
