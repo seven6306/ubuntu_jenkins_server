@@ -42,5 +42,6 @@ if __name__ == '__main__':
        e.g., python checkInstall.py vim --install
        e.g., python checkInstall.py Jenkins --remove "/etc/init.d/jenkins,/var/lib/jenkins,/usr/share/jenkins"
 """
+        exit(3)
     except Exception as err:
         print str(err)
