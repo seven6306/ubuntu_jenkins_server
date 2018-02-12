@@ -1,6 +1,5 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
-. lib/CheckInstall.sh
 . lib/Notification.sh
 . lib/PluginInstall.sh
 . lib/CheckPermission.sh
@@ -19,7 +18,7 @@ if [ "$1" = "-y" -o "$1" = "--yes" ]; then
     NOASK=1
 fi
 if [ $# -ne 0 -a $NOASK -ne 1 ]; then
-    CheckInstall Jenkins --remove "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
+    python lib/checkInstall.py jenkins --remove "/etc/init.d/jenkins,/var/lib/jenkins,/usr/share/jenkins"
     case $1 in
     -c|--create)
         [ "${2}" = "admin" -o -z "${2}" -o -z "${3}" -o `echo $2 | grep -c "username="` -eq 0 -o `echo $3 | grep -c "password="` -eq 0 ] && printf "${RED}ERROR: invalid username or password.${NC}\n" && exit 1
@@ -38,7 +37,7 @@ if [ $# -ne 0 -a $NOASK -ne 1 ]; then
     esac
     exit 0
 fi
-CheckInstall Jenkins --install "/etc/init.d/jenkins" "/var/lib/jenkins,/usr/share/jenkins"
+python lib/checkInstall.py jenkins --install "/etc/init.d/jenkins,/var/lib/jenkins,/usr/share/jenkins"
 NetworkConnTest www.google.com
 if [ $NOASK -eq 0 ]; then
     Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
