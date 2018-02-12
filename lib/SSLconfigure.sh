@@ -3,7 +3,7 @@ SSLconfigure()
     python lib/notification.py "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n"
     if [ $? -eq 0 ]; then
         python lib/checkInstall.py nginx --remove "/etc/init.d/nginx,/usr/sbin/nginx,/usr/share/nginx,/etc/nginx/sites-enabled/default"
-        [ `grep -cE "proxy_redirect|proxy_read_timeout|https://" /etc/nginx/sites-enabled/default` -ne 0 ] && printf "${RED}ERROR: Jenkins is already configure to SSL.${NC}\n" && return 1
+        [ `grep -cE "proxy_redirect|proxy_read_timeout|https://" /etc/nginx/sites-enabled/default` -ne 0 ] && printf "${RED}ERROR: Jenkins server is already configure to SSL.${NC}\n" && return 1
         sed -i 's,try_files $uri $uri/ =404;,# try_files $uri $uri/ =404;,g' /etc/nginx/sites-enabled/default
         for each_line in "proxy_redirect      http://localhost:8080 https://`python lib/gethostIPaddr.py`;" 'proxy_read_timeout  90;' 'proxy_pass          http://localhost:8080;' '# Fix the “It appears that your reverse proxy set up is broken" error.'
         do  sed -i "/\#\ include\ \/etc\/nginx\/naxsi\.rules/ a \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ${each_line}" /etc/nginx/sites-enabled/default
