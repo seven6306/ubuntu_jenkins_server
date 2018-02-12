@@ -21,6 +21,7 @@ def checkInstall(pkgName, action, files):
         print "\033[0;31mERROR: {} is not installed.\033[0m\n".format(pkgName)
         return False
     print "%s\t%34s\033[0;32m %s \033[0m]" % (" * Check if {} is installed      ".format(pkgName), "[", "OK")
+    return True
 
 if __name__ == '__main__':
     try:
