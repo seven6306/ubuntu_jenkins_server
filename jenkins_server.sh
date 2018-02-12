@@ -1,6 +1,5 @@
 #!/bin/bash
 # Script for ubuntu 14.04 LTS
-. lib/Notification.sh
 . lib/PluginInstall.sh
 . lib/NetworkConnTest.sh
 . lib/declare_variables.sh
@@ -39,7 +38,7 @@ fi
 python lib/checkInstall.py jenkins --install "/etc/init.d/jenkins,/var/lib/jenkins,/usr/share/jenkins" || exit 1
 NetworkConnTest www.google.com
 if [ $NOASK -eq 0 ]; then
-    Notification "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
+    python lib/notification.py "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
 fi
 add-apt-repository ppa:webupd8team/java -y
 apt-get update
@@ -69,7 +68,7 @@ JavaVer=`java -version 2>&1 | grep "java version" | awk -F\" '{print $2}'`
 [ `service jenkins status | grep -co not` -ne 0 ] && printf "\n${RED}Sorry, jenkins server is unavailable...${NC}\n\n" && exit 1
 PluginInstall sug
 if [ $NOASK -eq 0 ]; then
-    Notification "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n"
+    python lib/notification.py "Configure jenkins server with SSL? (default:No) [y/N] : " "${PURPLE}Configuring SSL settings...${NC}\n${LINE}\n\n"
     if [ $? -eq 0 ]; then
         if [ `dpkg -l | grep -c nginx` -gt 1 -a -f /etc/nginx/sites-enabled/default ]; then
             sed -i 's,try_files $uri $uri/ =404;,# try_files $uri $uri/ =404;,g' /etc/nginx/sites-enabled/default
