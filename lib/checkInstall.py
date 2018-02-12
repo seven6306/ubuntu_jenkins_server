@@ -1,6 +1,6 @@
 #!/usr/bin/python
+from sys import argv
 from apt import Cache
-from sys import argv, exit
 from os.path import isfile, isdir
 
 def checkInstall(pkgName, action, files):
@@ -33,16 +33,16 @@ if __name__ == '__main__':
             if action not in ['--install', '--remove']:
                 raise SyntaxError
             if not checkInstall(pkgName, action, files):
-                raise SystemExit
+                raise ImportError
         else:
             raise SyntaxError
-    except SystemExit:
-        exit(2)
+    except ImportError:
+        raise SystemExit(2)
     except SyntaxError:
         print """Usage: python checkInstall.py [Package] [Action] [Files]
        e.g., python checkInstall.py vim --install
        e.g., python checkInstall.py Jenkins --remove "/etc/init.d/jenkins,/var/lib/jenkins,/usr/share/jenkins"
 """
-        exit(3)
+        raise SystemExit(3)
     except Exception as err:
         print str(err)
