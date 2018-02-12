@@ -1,9 +1,15 @@
 #!/usr/bin/python
+from apt import Cache
 from sys import argv, exit
 from os.path import isfile, isdir
 
 def checkInstall(pkgName, action, files):
-    x, f_list = 0, files.split(',')
+    x, f_list, apt_cache = 0, files.split(','), Cache()
+    try:
+        if cache[pkgName].is_installed:
+            x = x + 1
+    except:
+        pass
     for i in f_list:
         if isfile(i) or isdir(i):
             x = x + 1
