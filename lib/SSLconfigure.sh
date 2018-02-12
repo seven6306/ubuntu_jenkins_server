@@ -12,7 +12,8 @@ SSLconfigure()
         service nginx restart
         service jenkins restart
         case $? in
-            0) printf "%s\t%34s\033[0;32m %s \033[0m]\n\n" " * Configure jenkins server with SSL" "[" "OK" && PORT=443 && PROTOCOL=https;;
+            0) printf "%s\t%34s\033[0;32m %s \033[0m]\n\n" " * Configure jenkins server with SSL" "[" "OK" && PORT=443 && PROTOCOL=https
+               printf " * site - ${GREEN}https://`python lib/gethostIPaddr.py`${NC}${RED}:${PORT}${NC} (https)\n";;
             *) printf "%s\t%34s\033[0;31m%s\033[0m]\n\n" " * Configure jenkins server with SSL" "[" "Fail" && exit 1;;
         esac
     fi
