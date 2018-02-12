@@ -36,7 +36,7 @@ if [ $# -ne 0 -a $NOASK -ne 1 ]; then
     exit 0
 fi
 python lib/checkInstall.py jenkins --install "/etc/init.d/jenkins,/var/lib/jenkins,/usr/share/jenkins" || exit 1
-NetworkConnTest www.google.com
+NetworkConnTest
 if [ $NOASK -eq 0 ]; then
     python lib/notification.py "Setup jenkins server will take 10-15 minutes, Are you sure? [y/N]: " "${LINE}\n${PURPLE}Oracle Java 8 download and setup starting:${NC}\n${LINE}\n" || exit 0
 fi
