@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from sys import argv
+from os import system
 
 def notification(question, text):
     c = 3
@@ -8,7 +9,7 @@ def notification(question, text):
             c = c - 1
             ans = raw_input(question)
             if ans != '' and ans[0] in ['y', 'Y']:
-                print text
+                system('printf "{}"'.format(text))
                 return True
             elif ans != '' and ans[0] in ['n', 'N']:
                 return False
