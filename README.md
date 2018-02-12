@@ -17,6 +17,7 @@ Usage:
       sh jenkins_server.sh [OPTION] [ARGV1]
       -s, --sslconf   Configure jenkins with SSL(https), the nginx
                       server is requirement
+                      --quiet      Configure without question
       -y, --yes       No required question but user create
                       username=[adminUser] password=[adminPassword]
       e.g., sh jenkins_server.sh -y username=test password=123456
