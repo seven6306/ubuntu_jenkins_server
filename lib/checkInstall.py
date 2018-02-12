@@ -38,6 +38,9 @@ if __name__ == '__main__':
     except SystemExit:
         exit(2)
     except SyntaxError:
-        print 'Usage: python checkInstall.py [Package] [Action] [Files]\n       e.g., python checkInstall.py Jenkins --remove "/etc/init.d/jenkins,/var/lib/jenkins,/usr/share/jenkins"' 
+        print """Usage: python checkInstall.py [Package] [Action] [Files]
+       e.g., python checkInstall.py vim --install
+       e.g., python checkInstall.py Jenkins --remove "/etc/init.d/jenkins,/var/lib/jenkins,/usr/share/jenkins"
+"""
     except Exception as err:
         print str(err)
