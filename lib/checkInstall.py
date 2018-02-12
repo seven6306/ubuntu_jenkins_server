@@ -23,8 +23,12 @@ def checkInstall(pkgName, action, files):
 
 if __name__ == '__main__':
     try:
-        if len(argv) == 4:
-            pkgName, action, files = argv[1], argv[2], argv[3]
+        if len(argv) == 3:
+            pkgName, action  = argv[1], argv[2]
+            try:
+                files = argv[3]
+            except:
+                files = ''
             if action not in ['--install', '--remove']:
                 raise SyntaxError
             if not checkInstall(pkgName, action, files):
