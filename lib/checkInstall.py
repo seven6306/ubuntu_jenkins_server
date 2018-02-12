@@ -6,7 +6,7 @@ from os.path import isfile, isdir
 def checkInstall(pkgName, action, files):
     x, f_list, apt_cache = 0, files.split(','), Cache()
     try:
-        if cache[pkgName].is_installed:
+        if apt_cache[pkgName].is_installed:
             x = x + 1
     except:
         pass
