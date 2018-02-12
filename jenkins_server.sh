@@ -69,7 +69,7 @@ done
 JavaVer=`java -version 2>&1 | grep "java version" | awk -F\" '{print $2}'`
 [ `service jenkins status | grep -co not` -ne 0 ] && printf "\n${RED}Sorry, jenkins server is unavailable...${NC}\n\n" && exit 1
 PluginInstall sug
-[ $NOASK -eq 0 ] && SSLconfigure
+SSLconfigure
 [ -z "${username}" -o -z "${password1}" ] && python lib/user_creator.py "Create new admin user:" && . /tmp/account.cache && rm -f /tmp/account.cache
 python lib/waiting_message.py "Waiting for server apply admin user" 60
 echo "jenkins.model.Jenkins.instance.securityRealm.createAccount(\"${username}\", \"${password1}\")" | sudo java -jar /var/cache/jenkins/war/WEB-INF/jenkins-cli.jar -auth admin:${initPasswd} -s http://localhost:8080/ groovy =
