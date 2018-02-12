@@ -14,7 +14,7 @@ Usage:
       Before use below listed options, make sure Jenkins has been
       installed.
 
-      sh jenkins_server.sh [OPTION] [ARGV1]
+      sh jenkins_server.sh [OPTION] [ARGV1] [ARGV2]
       -s, --sslconf   Configure jenkins with SSL(https), the nginx
                       server is requirement
                       --quiet      Configure without question
