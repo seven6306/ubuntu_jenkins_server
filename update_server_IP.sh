@@ -4,7 +4,8 @@
 
 [ "$1" = "-h" -o "$1" = "--help" ] && printf "Usage: sh update_server_IP.sh [OPTION]\n       -q,   --quiet       Force to update jenkins server IP address.\n" && exit 0
 python lib/checkPermission.py || exit 1
-python lib/checkInstall.py "jenkins_nginx" --remove "/etc/init.d/jenkins,/usr/sbin/nginx,/var/lib/jenkins,/usr/share/jenkins,/etc/nginx,/usr/share/nginx" || exit 1
+python lib/checkInstall.py "nginx" --remove "/usr/sbin/nginx,/etc/nginx,/usr/share/nginx" || exit 1
+python lib/checkInstall.py "jenkins" --remove "/etc/init.d/jenkins,/var/lib/jenkins,/usr/share/jenkins" || exit 1
 [ `grep -cE "proxy_redirect|proxy_read_timeout|https://" /etc/nginx/sites-enabled/default` -ne 2 ] && printf "${RED}ERROR: Jenkins server is not configure with SSL.${NC}\n" && exit 1
 case $1 in
     -q|--quiet) server_name=`python lib/gethostIPaddr.py`;;
