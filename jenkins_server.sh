@@ -4,7 +4,6 @@
 . lib/PluginInstall.sh
 . lib/NetworkConnTest.sh
 . lib/declare_variables.sh
-NOASK=0
 COUNTER=10
 PORT=8080
 PROTOCOL=http
