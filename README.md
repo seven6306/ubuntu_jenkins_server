@@ -8,7 +8,7 @@
 
 ## How to use it
 
-```javascript
+```sh
 Usage:
       Script additional functions notice:
       Before use below listed options, make sure Jenkins has been
